@@ -37,7 +37,7 @@ app.use(cors());
 const httpServer = http.createServer(app);
 const io = socketio(httpServer,{
   cors: {
-    origin: ["http://127.0.0.1:3000","http://127.0.0.1:4000"],
+    origin: "http://127.0.0.1:3000",
     methods: ["GET", "POST"]
   }
 });
@@ -101,5 +101,5 @@ app.post('/saveData', async(req, res) => {
 
 const port = 3030;
 httpServer.listen(port, () => {
-    console.log(`Server is running on http://127.0.0.1:${port}`);
+    console.log(`Server is running on port:${port}`);
 });
