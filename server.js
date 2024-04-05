@@ -90,7 +90,7 @@ app.post('/saveData', async(req, res) => {
 
         results.sort((a, b) => a.WS_id - b.WS_id);
         io.emit("wD", results);
-        console.log("data emitted")
+        console.log("data emitted");
         
 
     });
