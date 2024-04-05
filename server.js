@@ -10,10 +10,11 @@ const socketio = require('socket.io');
 const app = express();
 
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'Mang#301',
-    database: 'weather_api'
+    port: 17430,
+    host: 'mysql-28840110-imanthioshadhi55-aace.a.aivencloud.com',
+    user: 'avnadmin',
+    password: 'AVNS_mtSsqSnaQ0BiEQuIoDw',
+    database: 'defaultdb'
   });
   
   // Connect to the database
@@ -98,7 +99,7 @@ app.post('/saveData', async(req, res) => {
     
 });
 
-const port = process.env.PORT || 3030;
+const port = 3030;
 httpServer.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
