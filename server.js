@@ -3,6 +3,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const cors = require('cors');
+const http = require('http')
+const socketio = require('socket.io');
+
 // Create an instance of the Express application
 const app = express();
 
@@ -29,6 +32,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(cors());
+
+const httpServer = http.createServer(app);
+const io = socketio(httpServer,{
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"]
+  }
+});
 
 app.get('/loadData', (req, res) => {
     const selectQuery = 'SELECT * FROM readings order by dateTime DESC limit 25';
@@ -77,15 +88,17 @@ app.post('/saveData', async(req, res) => {
         }
 
         results.sort((a, b) => a.WS_id - b.WS_id);
-        console.log(results);
+        io.emit("wD", results);
+        console.log("data emitted")
+        
+
     });
 
     res.send('Success');
     
 });
 
-
 const port = process.env.PORT || 3030;
-app.listen(port, () => {
+httpServer.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
